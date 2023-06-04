@@ -10,6 +10,10 @@ predictor = Predict()
 
 app = Flask(__name__)
 
+@app.route("/", methods=["GET"])
+def index():
+    return "All Good"
+
 @app.route("/prepare", methods=["GET"])
 def prepare():
     download_models()
