@@ -30,7 +30,7 @@ class Predict:
             "olahraga_outdoor": "vit_bert_olahraga_outdoor",
             "otomotif": "vit_bert_otomotif",
             "pakaian_pria": "vit_bert_pakaian_pria",
-            "pakaian_Wanita": "vit_bert_pakaian_Wanita",
+            "pakaian_wanita": "vit_bert_pakaian_Wanita",
             "perawatan_kecantikan": "vit_bert_perawatan_kecantikan",
             "perlengkapan_rumah": "vit_bert_perlengkapan_rumah",
             "sepatu_pria": "vit_bert_sepatu_pria",
