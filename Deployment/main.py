@@ -10,6 +10,10 @@ predictor = Predict()
 
 app = Flask(__name__)
 
+@app.route("/", methods=["GET"])
+def index():
+    return "All Good"
+
 @app.route("/prepare", methods=["GET"])
 def prepare():
     download_models()
@@ -36,4 +40,4 @@ def predict_image():
     
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
