@@ -44,11 +44,10 @@ def download_models():
     for name, url in model_urls.items():
         path = f'{model_root}/{name}'
 
-        if not os.path.exists(path):
-            with urlopen(url) as zipresp:
-                with ZipFile(BytesIO(zipresp.read())) as zfile:
-                    zfile.extractall(path)
+        with urlopen(url) as zipresp:
+            with ZipFile(BytesIO(zipresp.read())) as zfile:
+                zfile.extractall(path)
         
-        print(f"Download Completed: {curr_model}/{len(model_urls)}  -  {name}" )
+        print(f"Download Completed: {curr_model}/{len(model_urls)}" )
         curr_model += 1
         
