@@ -49,11 +49,17 @@ class Predict:
             device = '/cpu:0'
         
         with tf.device(device):
+            print("Loading Model")
             model_path = f'models/{self.model_category_dict[category]}'
             model = TFVisionEncoderDecoderModel.from_pretrained(model_path)
-
+            
+            print("Preprocess Image")
             pixel_values = self.image_processor(pillow_image, return_tensors="tf").pixel_values
+            
+            print("Generate Text")
             generated_ids = model.generate(pixel_values)
+            
+            print("Decode Text")
             generated_text = self.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
         return generated_text
