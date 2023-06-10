@@ -47,7 +47,7 @@ class Predict:
             print("Use GPU")
             print("Loading Model")
             model_path = f'models/{self.model_category_dict[category]}'
-            model = TFVisionEncoderDecoderModel.from_pretrained(model_path)
+            model = TFVisionEncoderDecoderModel.from_pretrained(model_path, device_map='auto')
 
             print("Preprocess Image")
             pixel_values = self.image_processor(pillow_image, return_tensors="tf").pixel_values
