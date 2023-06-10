@@ -44,24 +44,35 @@ class Predict:
     def predict(self, pillow_image, category):
         
         if len(tf.config.list_physical_devices('GPU')) > 0:
-            device = '/gpu:0'
-        else:
-            device = '/cpu:0'
-        
-        with tf.device(device):
+            print("Use GPU")
             print("Loading Model")
             model_path = f'models/{self.model_category_dict[category]}'
             model = TFVisionEncoderDecoderModel.from_pretrained(model_path)
-            
+
             print("Preprocess Image")
             pixel_values = self.image_processor(pillow_image, return_tensors="tf").pixel_values
-            
+
             print("Generate Text")
             generated_ids = model.generate(pixel_values)
-            
+
             print("Decode Text")
             generated_text = self.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
+        else:
+            with tf.device('/cpu:0'):
+                print("Use CPU")
+                print("Loading Model")
+                model_path = f'models/{self.model_category_dict[category]}'
+                model = TFVisionEncoderDecoderModel.from_pretrained(model_path)
 
+                print("Preprocess Image")
+                pixel_values = self.image_processor(pillow_image, return_tensors="tf").pixel_values
+
+                print("Generate Text")
+                generated_ids = model.generate(pixel_values)
+
+                print("Decode Text")
+                generated_text = self.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
+        
         return generated_text
 
 
