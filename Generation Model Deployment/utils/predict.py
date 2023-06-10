@@ -43,7 +43,7 @@ class Predict:
 
     def predict(self, pillow_image, category):
         
-        if len(tf.config.list_physical_devices('GPU') > 0:
+        if len(tf.config.list_physical_devices('GPU')) > 0:
             device = '/gpu:0'
         else:
             device = '/cpu:0'
