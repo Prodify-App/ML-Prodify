@@ -1,5 +1,6 @@
 
 import io
+import tensorflow as tf
 
 from PIL import Image
 from flask import Flask, request, jsonify
@@ -41,6 +42,11 @@ def index():
 def prepare():
     download_models()
     return "OK"
+
+
+@app.route("/check-gpu", methods=["GET"])
+def check():
+    return tf.config.list_physical_devices('GPU')
     
 
 if __name__ == "__main__":
