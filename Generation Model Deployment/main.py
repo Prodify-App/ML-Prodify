@@ -46,7 +46,7 @@ def prepare():
 
 @app.route("/check-gpu", methods=["GET"])
 def check():
-    print(tf.config.list_physical_devices('GPU'))
+    print(len(tf.config.list_physical_devices('GPU')))
     return tf.config.list_physical_devices('GPU')
     
 
