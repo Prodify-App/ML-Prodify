@@ -3,8 +3,6 @@ import openai
 import os
 
 from transformers import AutoImageProcessor, AutoTokenizer, TFVisionEncoderDecoderModel
-from utils.chat_completion import ChatCompletion
-from EdgeGPT.EdgeUtils import Query, Cookie
 
 class Predict:
 
