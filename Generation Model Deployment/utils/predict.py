@@ -8,7 +8,10 @@ class Predict:
 
     def __init__(self):
 
-        openai.api_key = os.getenv("OPENAI_API_KEY")
+        with open('api.txt') as f:
+            api = f.readlines()
+
+        openai.api_key = api[0]
 
         encoder_pretrained = 'google/vit-base-patch16-224'
         decoder_pretrained = 'indolem/indobert-base-uncased'
