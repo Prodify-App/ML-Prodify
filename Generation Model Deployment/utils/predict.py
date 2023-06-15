@@ -1,4 +1,6 @@
 import tensorflow as tf
+import openai
+import os
 
 from transformers import AutoImageProcessor, AutoTokenizer, TFVisionEncoderDecoderModel
 from utils.chat_completion import ChatCompletion
@@ -7,6 +9,8 @@ from EdgeGPT.EdgeUtils import Query, Cookie
 class Predict:
 
     def __init__(self):
+
+        openai.api_key = os.getenv("OPENAI_API_KEY")
 
         encoder_pretrained = 'google/vit-base-patch16-224'
         decoder_pretrained = 'indolem/indobert-base-uncased'
@@ -80,23 +84,22 @@ class Predict:
     def predict_improvement(self, generated_title):
 
         title_prompt = f'Fix this product title and make it compelling and eye catching "{generated_title}". Only reply with the title in Bahasa Indonesia, do not add any explanation'
-        # predicted_title = self.get_result(title_prompt)
-        predicted_title = Query(title_prompt)
+        predicted_title = self.get_result(title_prompt).replace('"', '')
 
         description_prompt = f'Write a description for product titled "{predicted_title}", make it three sentences long. Only answer with the description in Bahasa Indonesia'
-        # predicted_description = self.get_result(description_prompt)
-        predicted_description = Query(description_prompt)
+        predicted_description = self.get_result(description_prompt)
 
         return predicted_title.output, predicted_description.output
     
      
     def get_result(self, prompt):
-        messages = [
-            {"role": "user", "content": prompt},
-        ]
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
+        )
 
-        results = ""
-        for chunk in ChatCompletion.create(messages):
-            results += chunk
+        content = completion.choices[0].message.content
 
-        return results
+        return content
