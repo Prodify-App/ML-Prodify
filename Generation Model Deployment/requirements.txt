@@ -6,4 +6,4 @@ transformers==4.28.0
 fake_useragent
 numpy
 openai
-Flask-Limiter
+Flask-Limiter[memcached]

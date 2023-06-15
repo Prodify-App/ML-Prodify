@@ -13,7 +13,7 @@ predictor = Predict()
 
 
 app = Flask(__name__)
-limiter = Limiter(get_remote_address, app=app)
+limiter = Limiter(get_remote_address, app=app, storage_uri="memcached://localhost:11211", storage_options={})
 
 
 @app.route("/", methods=["GET", "POST"])
