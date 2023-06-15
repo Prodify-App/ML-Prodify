@@ -17,6 +17,7 @@ limiter = Limiter(get_remote_address, app=app)
 
 
 @app.route("/", methods=["GET", "POST"])
+@limiter.limit("1 per 70 second")
 def index():
     if request.method == "POST":
         image = request.files.get("image")
@@ -49,7 +50,6 @@ def prepare():
 
 
 @app.route("/check-gpu", methods=["GET"])
-@limiter.limit("1 per 70 second")
 def check():
     print(len(tf.config.list_physical_devices('GPU')))
     return tf.config.list_physical_devices('GPU')
