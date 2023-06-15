@@ -90,7 +90,7 @@ class Predict:
         description_prompt = f'Write a description for product titled "{predicted_title}", make it three sentences long. Only answer with the description in Bahasa Indonesia'
         predicted_description = self.get_result(description_prompt)
 
-        return predicted_title.output, predicted_description.output
+        return predicted_title, predicted_description
     
      
     def get_result(self, prompt):
