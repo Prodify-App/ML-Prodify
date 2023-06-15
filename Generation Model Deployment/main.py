@@ -4,12 +4,16 @@ import tensorflow as tf
 
 from PIL import Image
 from flask import Flask, request, jsonify
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from utils.prepare import download_models
 from utils.predict import Predict
 
 predictor = Predict()
 
+
 app = Flask(__name__)
+limiter = Limiter(get_remote_address, app=app)
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -45,6 +49,7 @@ def prepare():
 
 
 @app.route("/check-gpu", methods=["GET"])
+@limiter.limit("1 per 70 second")
 def check():
     print(len(tf.config.list_physical_devices('GPU')))
     return tf.config.list_physical_devices('GPU')

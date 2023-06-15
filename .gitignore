@@ -1,2 +1,4 @@
 /Generation Model Deployment/models
 *.pyc
+/Generation Model Deployment/api.txt
+__pycache__
